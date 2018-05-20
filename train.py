@@ -10,7 +10,7 @@ def train(epoch):
         data = data.squeeze()
         # print 'data', data
         print 'data.size()', data.size()
-        plt.imsave('imsaves/imsave_epoch'+str(epoch)+'_batch'+batch_idx+'.png', data[0].numpy(), cmap='gray')
+        plt.imsave('imsaves/imsave_epoch'+str(epoch)+'_batch'+str(batch_idx)+'.png', data[0].numpy(), cmap='gray')
 
 x_dim = 10
 z_dim = 5
