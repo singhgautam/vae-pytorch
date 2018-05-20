@@ -1,6 +1,6 @@
 from model import VAE
 import torch
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 from torchvision import datasets, transforms
 print 'torch.version',torch.__version__
