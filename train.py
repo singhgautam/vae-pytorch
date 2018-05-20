@@ -7,19 +7,65 @@ print 'torch.version',torch.__version__
 def train(epoch):
     train_loss = 0
     for batch_idx, (data, _) in enumerate(train_loader):
-        data = data.squeeze()
-        # print 'data', data
-        print 'data.size()', data.size()
-        plt.imsave('imsaves/imsave_epoch'+str(epoch)+'_batch'+str(batch_idx)+'.png', data[0].numpy(), cmap='gray')
 
-x_dim = 10
-z_dim = 5
-h_dim = 10
+        #Clean and normalize the data set between 0 and 1
+        data = data.squeeze()
+        data = (data - data.min())/(data.max() - data.min())
+        data = data.view(-1,28*28)
+        z_sample, x_mean, neg_elbo, kld, nll = model(data)
+        neg_elbo.backward()
+        optimizer.step()
+        torch.nn.utils.clip_grad_norm_(model.parameters(), clip)
+        if batch_idx%print_every==0:
+            print 'EPOCH {} \t Batch Index {} \t KLDLoss {:.6f} \t NLLLoss {:.6f}'.format(
+                epoch,
+                batch_idx,
+                kld,
+                nll
+            )
+            x_sample = model.sample_x_mean()
+            x_sample = x_sample.view(28, 28)
+            plt.imsave('imsaves/imsave_epoch'+str(epoch)+'_batch'+str(batch_idx)+'.png', x_sample.numpy(), cmap='gray')
+        train_loss = train_loss + neg_elbo.item()
+    print '==> TRAINING EPOCH {} Average Loss: {:.4f}'.format(
+        epoch,
+        train_loss/(len(train_loader.dataset))
+    )
+
+def test(epoch):
+    mean_test_loss = 0
+    mean_kld_loss = 0
+    mean_nll_loss = 0
+    for batch_idx, (data, _) in enumerate(test_loader):
+
+        #Clean and normalize the data set between 0 and 1
+        data = data.squeeze()
+        data = (data - data.min())/(data.max() - data.min())
+        data = data.view(-1,28*28)
+        z_sample, x_mean, neg_elbo, kld, nll = model(data)
+        mean_test_loss += neg_elbo.item()
+        mean_kld_loss += kld
+        mean_nll_loss += nll
+    mean_test_loss /= len(test_loader.dataset)
+    mean_kld_loss /= len(test_loader.dataset)
+    mean_nll_loss /= len(test_loader.dataset)
+    print '==> TESTING EPOCH {} \t Average Loss: {:.4f} \t Average KLD {:.6f} \t Average NLL {:.6f}'.format(
+        epoch,
+        mean_test_loss,
+        mean_kld_loss,
+        mean_nll_loss
+    )
+
+x_dim = 28*28
+z_dim = 20
+h_dim = 40
 num_mc = 10
 batch_size = 128
 learning_rate = 1e-3
 n_epochs = 100
 save_every = 10
+print_every = 10
+clip = 10
 
 model = VAE(x_dim, z_dim, h_dim, num_mc)
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)

@@ -73,12 +73,17 @@ class VAE(nn.Module):
         nll = nll/(1.0 * self.num_mc)
         neg_elbo = kld + nll
 
-        return z_sample, x_mean, neg_elbo, kld, nll,
+        return z_sample, x_mean, neg_elbo, kld, nll
 
     def sample_gaussian(self, mean, std):
-        normalsample = torch.randn(std.size()[0]) #mean is a zero vector, all diagonals are 1 in std
-        return normalsample.mul(std) + mean #squeeze the vector based on std
+        normalsample = torch.randn(mean.size()) #mean is a zero vector, all diagonals are 1 in std
+        return normalsample.mul(std) + mean #scale the vector based on std
 
+    def sample_x_mean(self):
+        z_sample = self.sample_gaussian(self.prior_z_mean, self.prior_z_std)
+        z_enc = self.gen(z_sample)
+        x_gen = self.gen_mean(z_enc)
+        return x_gen
 
 
     def _kld_gauss(self, mean_1, std_1, mean_2, std_2):
