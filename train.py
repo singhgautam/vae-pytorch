@@ -25,7 +25,7 @@ def train(epoch):
             )
             x_sample = model.sample_x_mean()
             x_sample = x_sample.view(28, 28)
-            plt.imsave('imsaves/imsave_epoch'+str(epoch)+'_batch'+str(batch_idx)+'.png', x_sample.numpy(), cmap='gray')
+            plt.imsave('imsaves/imsave_epoch'+str(epoch)+'_batch'+str(batch_idx)+'.png', x_sample.detach().numpy(), cmap='gray')
         train_loss = train_loss + neg_elbo.item()
     print '==> TRAINING EPOCH {} Average Loss: {:.4f}'.format(
         epoch,

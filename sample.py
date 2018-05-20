@@ -1,6 +1,6 @@
 from model import VAE
 import torch
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 from torchvision import datasets, transforms
 print 'torch.version',torch.__version__
@@ -17,4 +17,4 @@ save_every = 10
 model = VAE(x_dim, z_dim, h_dim, num_mc)
 x_gen = model.sample_x_mean()
 x_gen = x_gen.view(28,28)
-plt.imsave('imsaves/sample_generated.png', x_gen.numpy(), cmap='gray')
+plt.imsave('imsaves/sample_generated.png', x_gen.detach().numpy(), cmap='gray')
