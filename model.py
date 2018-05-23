@@ -34,7 +34,7 @@ class VAE(nn.Module):
         )
 
 
-        #Inference model for getting mu(Z|X) and diagonal entries of sigma(Z|X)
+        #inference model for getting mu(Z|X) and diagonal entries of sigma(Z|X)
         self.inf = nn.Sequential(
             nn.Linear(x_dim,h_dim),
             nn.ReLU(),
@@ -50,6 +50,7 @@ class VAE(nn.Module):
             nn.Softplus()
         )
 
+        #set prior distribution on Z
         self.prior_z_mean = torch.zeros(self.z_dim)
         self.prior_z_std = torch.ones(self.z_dim)
 

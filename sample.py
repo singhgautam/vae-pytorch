@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from torchvision import datasets, transforms
 print 'torch.version',torch.__version__
 
+
 x_dim = 28*28
 z_dim = 20
 h_dim = 40

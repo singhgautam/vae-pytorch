@@ -2,7 +2,12 @@ from model import VAE
 import torch
 from torchvision import datasets, transforms
 import matplotlib.pyplot as plt
+
+# initialize CUDA
 print 'torch.version',torch.__version__
+print 'torch.cuda.is_available()',torch.cuda.is_available()
+device = torch.device("cuda")
+kwargs = {'num_workers': 1, 'pin_memory': True}
 
 def train(epoch):
     train_loss = 0
@@ -12,6 +17,7 @@ def train(epoch):
         data = data.squeeze()
         data = (data - data.min())/(data.max() - data.min())
         data = data.view(-1,28*28)
+        data = data.to(device)
         z_sample, x_mean, neg_elbo, kld, nll = model(data)
         neg_elbo.backward()
         optimizer.step()
@@ -58,7 +64,7 @@ def test(epoch):
 
 x_dim = 28*28
 z_dim = 20
-h_dim = 40
+h_dim = 400
 num_mc = 10
 batch_size = 128
 learning_rate = 1e-3
@@ -67,22 +73,22 @@ save_every = 10
 print_every = 10
 clip = 10
 
-model = VAE(x_dim, z_dim, h_dim, num_mc)
+model = VAE(x_dim, z_dim, h_dim, num_mc).to(device=device)
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
 train_loader = torch.utils.data.DataLoader(
     datasets.MNIST('data', train=True, download=True, transform=transforms.ToTensor()),
-    batch_size=batch_size, shuffle=True
+    batch_size=batch_size, shuffle=True, **kwargs
 )
 
 test_loader = torch.utils.data.DataLoader(
     datasets.MNIST('data', train=False, transform=transforms.ToTensor()),
-    batch_size=batch_size, shuffle=True
+    batch_size=batch_size, shuffle=True, **kwargs
 )
 
 for epoch in range(1, n_epochs + 1):
     train(epoch)
-    # test(epoch)
+    test(epoch)
     if epoch%save_every == 1:
         filename = 'modelsaves/vae_state_dict_'+str(epoch)+'.pth'
         torch.save(model.state_dict(), filename)
