@@ -48,6 +48,7 @@ def test(epoch):
         data = data.squeeze()
         data = (data - data.min())/(data.max() - data.min())
         data = data.view(-1,28*28)
+        data = data.to(device)
         z_sample, x_mean, neg_elbo, kld, nll = model(data)
         mean_test_loss += neg_elbo.item()
         mean_kld_loss += kld
