@@ -8,7 +8,7 @@ import torch.utils.data
 torch.manual_seed(1)
 
 class VAE(nn.Module):
-    def __init__(self, x_dim, z_dim, h_dim, num_mc):
+    def __init__(self, x_dim, z_dim, h_dim, num_mc, device):
         super(VAE, self).__init__()
 
         #parameter initialization
@@ -16,6 +16,7 @@ class VAE(nn.Module):
         self.z_dim = z_dim
         self.h_dim = h_dim
         self.num_mc = num_mc
+        self.device = device
 
         #generative model for getting mu(X|Z) and diagonal entries of sigma(X|Z)
         self.gen = nn.Sequential(
@@ -51,8 +52,8 @@ class VAE(nn.Module):
         )
 
         #set prior distribution on Z
-        self.prior_z_mean = torch.zeros(self.z_dim)
-        self.prior_z_std = torch.ones(self.z_dim)
+        self.prior_z_mean = torch.zeros(self.z_dim).to(self.device)
+        self.prior_z_std = torch.ones(self.z_dim).to(self.device)
 
     def forward(self, x):
 
@@ -77,7 +78,7 @@ class VAE(nn.Module):
         return z_sample, x_mean, neg_elbo, kld, nll
 
     def sample_gaussian(self, mean, std):
-        normalsample = torch.randn(mean.size()) #mean is a zero vector, all diagonals are 1 in std
+        normalsample = torch.randn(mean.size()).to(self.device) #mean is a zero vector, all diagonals are 1 in std
         return normalsample.mul(std) + mean #scale the vector based on std
 
     def sample_x_mean(self):

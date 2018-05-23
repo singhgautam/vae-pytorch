@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 # initialize CUDA
 print 'torch.version',torch.__version__
 print 'torch.cuda.is_available()',torch.cuda.is_available()
-device = torch.device("cuda")
+device = torch.device("cuda") # other "cpu"
 kwargs = {'num_workers': 1, 'pin_memory': True}
 
 def train(epoch):
@@ -73,7 +73,7 @@ save_every = 10
 print_every = 10
 clip = 10
 
-model = VAE(x_dim, z_dim, h_dim, num_mc).to(device=device)
+model = VAE(x_dim, z_dim, h_dim, num_mc, device).to(device=device)
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
 train_loader = torch.utils.data.DataLoader(
