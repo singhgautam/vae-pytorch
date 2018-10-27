@@ -93,9 +93,9 @@ def train(epoch):
 
 z_dim = 200
 h_dim = 800
-batch_size = 10
+batch_size = 20
 learning_rate = 1e-3
-n_epochs = 1000
+n_epochs = 2000
 save_every = 10
 print_every = 10
 clip = 10
