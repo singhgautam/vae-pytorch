@@ -3,12 +3,16 @@ import torch
 import torchvision
 from torchvision import datasets, transforms
 import matplotlib.pyplot as plt
+import tensorflow as tf
 
 # initialize CUDA
 print 'torch.version',torch.__version__
 print 'torch.cuda.is_available()',torch.cuda.is_available()
 device = torch.device("cuda") # other "cpu"
 kwargs = {'num_workers': 1, 'pin_memory': True}
+
+output_path = "logs/training_shepard_metzlar"
+summary_writer = tf.summary.FileWriter(output_path)
 
 def train(epoch):
     train_loss = 0
@@ -30,6 +34,20 @@ def train(epoch):
         torch.nn.utils.clip_grad_norm_(model.parameters(), clip)
 
         optimizer.step()
+
+        kld_summary = tf.Summary()
+        nll_summary = tf.Summary()
+        elbo_summary = tf.Summary()
+
+        kld_summary.value.add(tag='KLD', simple_value = kld.mean())
+        nll_summary.value.add(tag="NLL", simple_value = nll.mean())
+        elbo_summary.value.add(tag='ELBO', simple_value = -mean_neg_elbo)
+
+        summary_writer.add_summary(kld_summary, epoch*batch_size + batch_idx)
+        summary_writer.add_summary(nll_summary, epoch*batch_size + batch_idx)
+        summary_writer.add_summary(elbo_summary, epoch*batch_size + batch_idx)
+
+        summary_writer.flush()
 
         if batch_idx%print_every==0:
             print 'EPOCH {} \t Batch Index {} \t KLDLoss {:.6f} \t NLLLoss {:.6f}'.format(
@@ -87,7 +105,7 @@ model = VariationalModelConvDeconvOmniglot(h_dim, z_dim).to(device=device)
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
 train_loader = torch.utils.data.DataLoader(
-    datasets.ImageFolder('/home/gautam/git/practice-shepardmetzlar-dataset-generator/datasets/',
+    datasets.ImageFolder('data_shepard_metzlar',
                          transform=transforms.ToTensor()),
     batch_size=batch_size, shuffle=True, **kwargs
 )
