@@ -2,7 +2,17 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$USER_HOME$/ApplyNow/SungjinAhn/gits/pytorch-default-suite/.idea/pytorch-default-suite.iml" filepath="$USER_HOME$/ApplyNow/SungjinAhn/gits/pytorch-default-suite/.idea/pytorch-default-suite.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../VariationalRecurrentNeuralNetwork/.idea/VariationalRecurrentNeuralNetwork.iml" filepath="$PROJECT_DIR$/../VariationalRecurrentNeuralNetwork/.idea/VariationalRecurrentNeuralNetwork.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../gym/.idea/gym.iml" filepath="$PROJECT_DIR$/../gym/.idea/gym.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../gym-jaehyun/.idea/gym-jaehyun.iml" filepath="$PROJECT_DIR$/../gym-jaehyun/.idea/gym-jaehyun.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../gym-piston/.idea/gym-piston.iml" filepath="$PROJECT_DIR$/../gym-piston/.idea/gym-piston.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../gym-soccer/.idea/gym-soccer.iml" filepath="$PROJECT_DIR$/../gym-soccer/.idea/gym-soccer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../hello-gym/.idea/hello-gym.iml" filepath="$PROJECT_DIR$/../hello-gym/.idea/hello-gym.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../hello-mujoco/.idea/hello-mujoco.iml" filepath="$PROJECT_DIR$/../hello-mujoco/.idea/hello-mujoco.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../mujoco-py/.idea/mujoco-py.iml" filepath="$PROJECT_DIR$/../mujoco-py/.idea/mujoco-py.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../pytorch-embodied-generative-agents/.idea/pytorch-embodied-generative-agents.iml" filepath="$PROJECT_DIR$/../pytorch-embodied-generative-agents/.idea/pytorch-embodied-generative-agents.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../pytorch-gtmm/.idea/pytorch-gtmm.iml" filepath="$PROJECT_DIR$/../pytorch-gtmm/.idea/pytorch-gtmm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../pytorch-guide/.idea/pytorch-guide.iml" filepath="$PROJECT_DIR$/../pytorch-guide/.idea/pytorch-guide.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/vae-pytorch.iml" filepath="$PROJECT_DIR$/.idea/vae-pytorch.iml" />
     </modules>
   </component>

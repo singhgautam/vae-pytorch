@@ -2,5 +2,17 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../VariationalRecurrentNeuralNetwork" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../cs520" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../gym" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../gym-jaehyun" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../gym-piston" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../gym-soccer" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../hello-gym" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../hello-mujoco" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../mujoco-py" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../pytorch-embodied-generative-agents" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../pytorch-gtmm" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../pytorch-guide" vcs="Git" />
   </component>
 </project>
